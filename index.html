@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: burlywood;
+      width: 100%;
+      max-width: 360px;
+      margin: auto;
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid gray;
+    }
+    .mains {
+      margin-top: 4rem;
+    }
+    button {
+      padding: 5px;
+      cursor: pointer;
+    }
+    input {
+      width: 200px;
+      height: 50px;
+    }
+    #isCorrect {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .parag {
+      display: none;
+    }
+    .restart {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5rem;
+    }
+
+  </style>
+</head>
+<body>
+  <main class="mains">
+    <section class="container">
+      <input type="number" placeholder="Tebak Angka 1-100" id="inputs"><br>
+      <button id="btn">Tebak</button> <br>
+      <p class="parag">Number: <span id="theNum">0</span></p>
+    </section>
+    <div id="isCorrect"></div>
+    <div class="restart">
+      <button id="restartBtn">Main lagi?</button>
+    </div>
+  </main>
+</body>
+<script>
+
+  const getInput = document.getElementById("inputs");
+  const getBtn = document.getElementById("btn");
+  const getNum = document.getElementById("theNum");
+  const message = document.getElementById("isCorrect");
+  const correctMsg = document.querySelector(".parag");
+  const restartDisplay = document.querySelector(".restart");
+  const restartBtn = document.getElementById("restartBtn");
+
+  const randomNum = () => Math.floor(Math.random() * 100) + 1;
+  let secretNum = randomNum();
+  getNum.textContent = secretNum;
+
+
+  const guestTheNumber = () => {
+    const values = Number(getInput.value)
+    if (values === secretNum) {
+      message.textContent = `Tebakkan Benar`
+      message.style.color = "Green"
+      correctMsg.style.display = "flex"
+      getBtn.disabled = true
+      restartDisplay.style.display = "flex"
+    } else if (values < secretNum) {
+      message.textContent = "Terlalu Rendah"
+      message.style.color = "Yellow"
+    } else {
+      message.textContent = "Terlalu Tinggi"
+      message.style.color = "Red"
+    }
+  }
+
+  const restartGame = () => {
+    restartDisplay.style.display = "none"
+    message.textContent = ""
+    correctMsg.style.display = "none"
+    getBtn.disabled = false
+    secretNum = randomNum()
+    getNum.textContent = secretNum;
+    getInput.value = ""
+  }
+
+  getBtn.addEventListener("click", () => {
+    guestTheNumber();
+  });
+
+  restartBtn.addEventListener("click", () => {
+    restartGame();
+  })
+
+
+</script>
+</html>
